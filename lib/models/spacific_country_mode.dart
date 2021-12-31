@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final spacifcCountryCasesModel = spacifcCountryCasesModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<SpacifcCountryCasesModel> spacifcCountryCasesModelFromJson(String str) =>
@@ -113,3 +109,4 @@ class CountryInfo {
         flag: json["flag"] ?? '',
       );
 }
+//     final spacifcCountryCasesModel = spacifcCountryCasesModelFromJson(jsonString);

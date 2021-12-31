@@ -7,39 +7,39 @@ class WorldwidePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: GridView(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, childAspectRatio: 2),
-        children: <Widget>[
-          StatusPanel(
-            title: 'CONFIRMED',
-            panelColor: Colors.red[100]!,
-            textColor: Colors.red,
-            count: worldData['cases'].toString(),
-          ),
-          StatusPanel(
-            title: 'ACTIVE',
-            panelColor: Colors.blue[100]!,
-            textColor: Colors.blue[900]!,
-            count: worldData['active'].toString(),
-          ),
-          StatusPanel(
-            title: 'RECOVERED',
-            panelColor: Colors.green[100]!,
-            textColor: Colors.green,
-            count: worldData['recovered'].toString(),
-          ),
-          StatusPanel(
-            title: 'DEATHS',
-            panelColor: Colors.grey[400]!,
-            textColor: Colors.grey[900]!,
-            count: worldData['deaths'].toString(),
-          ),
-        ],
+    return GridView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 2,
       ),
+      children: <Widget>[
+        StatusPanel(
+          title: 'CONFIRMED',
+          panelColor: Colors.red[100]!,
+          textColor: Colors.red,
+          count: worldData['cases'].toString(),
+        ),
+        StatusPanel(
+          title: 'ACTIVE',
+          panelColor: Colors.blue[100]!,
+          textColor: Colors.blue[900]!,
+          count: worldData['active'].toString(),
+        ),
+        StatusPanel(
+          title: 'RECOVERED',
+          panelColor: Colors.green[100]!,
+          textColor: Colors.green,
+          count: worldData['recovered'].toString(),
+        ),
+        StatusPanel(
+          title: 'DEATHS',
+          panelColor: Colors.grey[400]!,
+          textColor: Colors.grey[900]!,
+          count: worldData['deaths'].toString(),
+        ),
+      ],
     );
   }
 }
@@ -63,7 +63,7 @@ class StatusPanel extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       height: 80,
       width: width / 2,
       color: panelColor,

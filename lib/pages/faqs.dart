@@ -2,11 +2,13 @@ import 'package:covid_19/datasorce.dart';
 import 'package:flutter/material.dart';
 
 class FAQPage extends StatelessWidget {
+  const FAQPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FAQs'),
+        title:const Text('FAQs'),
       ),
       body: ListView.builder(
           itemCount: DataSource.questionAnswers.length,
@@ -14,7 +16,7 @@ class FAQPage extends StatelessWidget {
             return ExpansionTile(
               title: Text(
                 DataSource.questionAnswers[index]['question'],
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style:const TextStyle(fontWeight: FontWeight.bold),
               ),
               children: <Widget>[
                 Padding(

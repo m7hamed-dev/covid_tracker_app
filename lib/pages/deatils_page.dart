@@ -22,7 +22,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     controller.dispose();
     super.dispose();
   }
@@ -52,25 +51,25 @@ class _DetailsPageState extends State<DetailsPage> {
             //   offset: offset,
             // ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              padding:const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               height: 60,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(25),
                 border: Border.all(
-                  color: Color(0xFFE5E5E5),
+                  color: const Color(0xFFE5E5E5),
                 ),
               ),
               child: Row(
                 children: <Widget>[
                   // SvgPicture.asset("assets/icons/maps-and-flags.svg"),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Expanded(
                     child: DropdownButton(
                       isExpanded: true,
-                      underline: SizedBox(),
+                      underline: const SizedBox(),
                       // icon: SvgPicture.asset("assets/icons/dropdown.svg"),
                       value: "Indonesia",
                       items: [
@@ -90,9 +89,9 @@ class _DetailsPageState extends State<DetailsPage> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: <Widget>[
                   Row(
@@ -105,7 +104,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               // text: 'Case Update\n ${widget.countryCasesModel.country',
                               // style: kTitleTextstyle,
                             ),
-                            TextSpan(
+                            const TextSpan(
                               text: "Newest update March 28",
                               style: TextStyle(
                                   // color: kTextLightColor,
@@ -114,8 +113,8 @@ class _DetailsPageState extends State<DetailsPage> {
                           ],
                         ),
                       ),
-                      Spacer(),
-                      Text(
+                      const Spacer(),
+                      const Text(
                         "See details",
                         style: TextStyle(
                           // color: kPrimaryColor,
@@ -124,13 +123,13 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           offset: Offset(0, 4),
                           blurRadius: 30,
@@ -140,7 +139,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
+                      children: const <Widget>[
                         Counter(
                           color: Colors.green,
                           number: 1046,
@@ -159,10 +158,10 @@ class _DetailsPageState extends State<DetailsPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                 const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
+                    children:const <Widget>[
                       Text(
                         "Spread of Virus",
                         // style: kTitleTextstyle,
@@ -177,14 +176,14 @@ class _DetailsPageState extends State<DetailsPage> {
                     ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20),
-                    padding: EdgeInsets.all(20),
+                    margin:const EdgeInsets.only(top: 20),
+                    padding:const EdgeInsets.all(20),
                     height: 178,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
-                      boxShadow: [
+                      boxShadow:const [
                         BoxShadow(
                           offset: Offset(0, 10),
                           blurRadius: 30,
@@ -223,7 +222,7 @@ class Counter extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.all(6),
+          padding:const EdgeInsets.all(6),
           height: 25,
           width: 25,
           decoration: BoxDecoration(
@@ -241,7 +240,7 @@ class Counter extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 10),
+     const   SizedBox(height: 10),
         Text(
           "$number",
           style: TextStyle(

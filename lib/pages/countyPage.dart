@@ -1,12 +1,11 @@
 import 'package:covid_19/models/spacific_country_mode.dart';
-import 'package:covid_19/models/world_cases_model.dart';
 import 'package:covid_19/pages/deatils_page.dart';
-import 'package:covid_19/pages/search.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class CountryPage extends StatefulWidget {
+  const CountryPage({Key? key}) : super(key: key);
+
   @override
   _CountryPageState createState() => _CountryPageState();
 }
@@ -38,7 +37,7 @@ class _CountryPageState extends State<CountryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
+        actions: const <Widget>[
           // IconButton(
           //   icon: Icon(Icons.search),
           //   onPressed: () {
@@ -116,46 +115,44 @@ class _CountryPageState extends State<CountryPage> {
                                   ),
                                 ),
                                 Expanded(
-                                    child: Container(
-                                  child: Column(
-                                    children: <Widget>[
-                                      // Text(
-                                      //   'CONFIRMED:' +
-                                      //       countryData[index]['cases']
-                                      //           .toString(),
-                                      //   style: const TextStyle(
-                                      //       fontWeight: FontWeight.bold,
-                                      //       color: Colors.red),
-                                      // ),
-                                      // Text(
-                                      //   'ACTIVE:' +
-                                      //       countryData[index]['active']
-                                      //           .toString(),
-                                      //   style: const TextStyle(
-                                      //       fontWeight: FontWeight.bold,
-                                      //       color: Colors.blue),
-                                      // ),
-                                      // Text(
-                                      //   'RECOVERED:' +
-                                      //       countryData[index]['recovered']
-                                      //           .toString(),
-                                      //   style: const TextStyle(
-                                      //       fontWeight: FontWeight.bold,
-                                      //       color: Colors.green),
-                                      // ),
-                                      // Text(
-                                      //   'DEATHS:' +
-                                      //       countryData[index]['deaths']
-                                      //           .toString(),
-                                      //   style: TextStyle(
-                                      //       fontWeight: FontWeight.bold,
-                                      //       color: Theme.of(context).brightness ==
-                                      //               Brightness.dark
-                                      //           ? Colors.grey[100]
-                                      //           : Colors.grey[900]),
-                                      // ),
-                                    ],
-                                  ),
+                                    child: Column(
+                                  children: const <Widget>[
+                                    // Text(
+                                    //   'CONFIRMED:' +
+                                    //       countryData[index]['cases']
+                                    //           .toString(),
+                                    //   style: const TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Colors.red),
+                                    // ),
+                                    // Text(
+                                    //   'ACTIVE:' +
+                                    //       countryData[index]['active']
+                                    //           .toString(),
+                                    //   style: const TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Colors.blue),
+                                    // ),
+                                    // Text(
+                                    //   'RECOVERED:' +
+                                    //       countryData[index]['recovered']
+                                    //           .toString(),
+                                    //   style: const TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Colors.green),
+                                    // ),
+                                    // Text(
+                                    //   'DEATHS:' +
+                                    //       countryData[index]['deaths']
+                                    //           .toString(),
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Theme.of(context).brightness ==
+                                    //               Brightness.dark
+                                    //           ? Colors.grey[100]
+                                    //           : Colors.grey[900]),
+                                    // ),
+                                  ],
                                 ))
                               ],
                             ),

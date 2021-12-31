@@ -23,13 +23,13 @@ class MostAffectedPanel extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 countryData[index].country,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style:const TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(width: 10),
               Text(
                 'Deaths: ${countryData[index].deaths}',
                 style:
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                const    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
               )
             ],
           ),
