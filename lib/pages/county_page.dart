@@ -1,5 +1,9 @@
 import 'package:covid_19/models/spacific_country_mode.dart';
 import 'package:covid_19/pages/deatils_page.dart';
+import 'package:covid_19/tools/push.dart';
+import 'package:covid_19/tools/txt_style.dart';
+import 'package:covid_19/widgets/custom_cached_img.dart';
+import 'package:covid_19/widgets/shimmer_image.dart';
 import 'package:covid_19/widgets/shimmer_loading_countries.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -12,24 +16,29 @@ class CountryPage extends StatefulWidget {
 }
 
 class _CountryPageState extends State<CountryPage> {
+  var _error = '';
   List<SpacifcCountryCasesModel> countryData = [];
   List<SpacifcCountryCasesModel> _searchCountryData = [];
-
+  bool isError = false;
   fetchCountryData() async {
-    http.Response response =
-        await http.get(Uri.parse('https://corona.lmao.ninja/v2/countries'));
-    setState(() {
+    try {
+      http.Response response =
+          await http.get(Uri.parse('https://corona.lmao.ninja/v2/countries'));
       final spacifcCountryCasesModel =
           spacifcCountryCasesModelFromJson(response.body);
       _searchCountryData = countryData = spacifcCountryCasesModel;
-      // searchCountryData = countryData = json.decode(response.body);
-    });
+      setState(() {});
+    } catch (e) {
+      _error = e.toString();
+      isError = false;
+      setState(() {});
+    }
   }
 
   @override
   void initState() {
-    fetchCountryData();
     super.initState();
+    fetchCountryData();
   }
 
   final TextEditingController _searchController = TextEditingController();
@@ -48,42 +57,63 @@ class _CountryPageState extends State<CountryPage> {
         // title: const Text('Country Stats'),
         title: Text('${_searchCountryData.length}'),
       ),
-      body: countryData.isEmpty
-          ? const Center(
-              child: ShimmerLoadingCountries(),
+      body: isError
+          ? Center(
+              child: Text(_error),
             )
-          : Column(
-              children: [
-                TextFormField(
-                  controller: _searchController,
-                  onChanged: (value) {
-                    _searchCountryData = _searchController.text.isEmpty
-                        ? countryData
-                        : countryData.where((e) {
-                            if (e.country.contains(value)) {
-                              return true;
-                            }
-                            return false;
-                          }).toList();
-                    setState(() {});
-                  },
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    itemCount: _searchCountryData.length,
-                    itemBuilder: (context, index) {
-                      return CardCountryStatistics(
-                        countryCasesModel: _searchCountryData[index],
-                      );
-                    },
-                    separatorBuilder: (context, index) => Divider(
-                      thickness: 10.0,
-                      color: Colors.grey.shade200,
+          : countryData.isEmpty
+              ? const Center(
+                  child: ShimmerLoadingCountries(),
+                )
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: _searchController,
+                        onChanged: (value) {
+                          _searchCountryData = _searchController.text.isEmpty
+                              ? countryData
+                              : countryData.where((e) {
+                                  if (e.country.contains(value)) {
+                                    return true;
+                                  }
+                                  return false;
+                                }).toList();
+                          setState(() {});
+                        },
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              borderSide: BorderSide(
+                                width: 1.0,
+                              )),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          hintText: "Type in your text",
+                          fillColor: Colors.white70,
+                        ),
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount: _searchCountryData.length,
+                        itemBuilder: (context, index) {
+                          return CardCountryStatistics(
+                            countryCasesModel: _searchCountryData[index],
+                          );
+                        },
+                        separatorBuilder: (context, index) => Divider(
+                          thickness: 10.0,
+                          color: Colors.grey.shade200,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
     );
   }
 }
@@ -100,13 +130,7 @@ class CardCountryStatistics extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) {
-            return DetailsPage(
-              countryCasesModel: countryCasesModel,
-            );
-          },
-        ));
+        Push.toPage(context, DetailsPage(countryCasesModel: countryCasesModel));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -119,16 +143,15 @@ class CardCountryStatistics extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.network(
-                    countryCasesModel.countryInfo.flag,
+                  CustomCachedImg(
+                    imageUrl: countryCasesModel.countryInfo.flag,
+                    placeHolder: const ShimmerImage(),
                     height: 50,
                     width: 60,
                   ),
                   Text(
                     countryCasesModel.country,
-                    style: const TextStyle(
-                        // fontWeight: FontWeight.bold,
-                        ),
+                    style: TxtStyle.style(),
                   ),
                 ],
               ),

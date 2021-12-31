@@ -32,26 +32,33 @@ class SwiperPage extends StatelessWidget {
             Positioned(
               bottom: 10,
               left: 0.0,
-              child: Text(
-                _info[index],
-                style: const TextStyle(
-                  fontFamily: 'Ubuntu',
-                  // color: Colors.orange[800],
-                  // fontWeight: FontWeight.bold,
-                  fontSize: 16,
+              child: Container(
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(.1),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Text(
+                  _info[index],
+                  style: const TextStyle(
+                    fontFamily: 'Ubuntu',
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),
           ],
         );
       },
+      // duration: 9000,
+      // autoplayDelay: 1000,
       indicatorLayout: PageIndicatorLayout.SCALE,
       autoplay: true,
-      autoplayDelay: 1000,
       pagination: const SwiperPagination(),
       control: const SwiperControl(),
       fade: 1.0,
-      viewportFraction: 0.85,
+      viewportFraction: 0.98,
     );
   }
 }

@@ -1,206 +1,100 @@
+import 'dart:ui';
+
 import 'package:covid_19/models/spacific_country_mode.dart';
+import 'package:covid_19/widgets/custom_cached_img.dart';
+import 'package:covid_19/widgets/symptoms_disease.dart';
 import 'package:flutter/material.dart';
 
-class DetailsPage extends StatefulWidget {
+class DetailsPage extends StatelessWidget {
   final SpacifcCountryCasesModel countryCasesModel;
 
   const DetailsPage({Key? key, required this.countryCasesModel})
       : super(key: key);
-  @override
-  _DetailsPageState createState() => _DetailsPageState();
-}
-
-class _DetailsPageState extends State<DetailsPage> {
-  final controller = ScrollController();
-  double offset = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    controller.addListener(onScroll);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  void onScroll() {
-    setState(() {
-      offset = (controller.hasClients) ? controller.offset : 0;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.countryCasesModel.country,
-        ),
-      ),
-      body: SingleChildScrollView(
-        controller: controller,
-        child: Column(
-          children: <Widget>[
-            // MyHeader(
-            //   image: "assets/icons/Drcorona.svg",
-            //   textTop: "All you need",
-            //   textBottom: "is stay at home.",
-            //   offset: offset,
-            // ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              padding:const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-                border: Border.all(
-                  color: const Color(0xFFE5E5E5),
-                ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  // SvgPicture.asset("assets/icons/maps-and-flags.svg"),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: DropdownButton(
-                      isExpanded: true,
-                      underline: const SizedBox(),
-                      // icon: SvgPicture.asset("assets/icons/dropdown.svg"),
-                      value: "Indonesia",
-                      items: [
-                        'Indonesia',
-                        'Bangladesh',
-                        'United States',
-                        'Japan'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (value) {},
-                    ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     widget.countryCasesModel.country,
+      //   ),
+      // ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            elevation: 0.0,
+            expandedHeight: 100.0,
+            pinned: false,
+            floating: true,
+            title: Text(countryCasesModel.country),
+            flexibleSpace: SizedBox(
+              height: 100.0,
+              // child: Wrap(
+              child: ListView(
+                children: [
+                  CustomCachedImg(
+                    height: 50.0,
+                    imageUrl: countryCasesModel.countryInfo.flag,
+                    // height: 50,
+                    // width: 60,
                   ),
+                  // Row(
+                  //   children: [
+                  //     Counter(number: 1, color: Colors.amber, title: 'title'),
+                  //     Counter(number: 1, color: Colors.amber, title: 'title'),
+                  //     Counter(number: 1, color: Colors.amber, title: 'title'),
+                  //     Counter(number: 1, color: Colors.amber, title: 'title'),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: widget.countryCasesModel.country,
-                              // text: 'Case Update\n ${widget.countryCasesModel.country',
-                              // style: kTitleTextstyle,
-                            ),
-                            const TextSpan(
-                              text: "Newest update March 28",
-                              style: TextStyle(
-                                  // color: kTextLightColor,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Spacer(),
-                      const Text(
-                        "See details",
-                        style: TextStyle(
-                          // color: kPrimaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 30,
-                          // color: kShadowColor,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const <Widget>[
-                        Counter(
-                          color: Colors.green,
-                          number: 1046,
-                          title: "Infected",
-                        ),
-                        Counter(
-                          color: Colors.green,
-                          number: 87,
-                          title: "Deaths",
-                        ),
-                        Counter(
-                          color: Colors.green,
-                          number: 46,
-                          title: "Recovered",
-                        ),
-                      ],
-                    ),
-                  ),
-                 const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:const <Widget>[
-                      Text(
-                        "Spread of Virus",
-                        // style: kTitleTextstyle,
-                      ),
-                      Text(
-                        "See details",
-                        style: TextStyle(
-                          // color: kPrimaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin:const EdgeInsets.only(top: 20),
-                    padding:const EdgeInsets.all(20),
-                    height: 178,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      boxShadow:const [
-                        BoxShadow(
-                          offset: Offset(0, 10),
-                          blurRadius: 30,
-                          // color: kShadowColor,
-                        ),
-                      ],
-                    ),
-                    child: Image.asset(
-                      "assets/images/map.png",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ],
-              ),
+          ),
+          // SliverList(
+          //   delegate: SliverChildBuilderDelegate(
+          //     (BuildContext context, int index) {
+          //       return Row(
+          //         children: [
+          //           Counter(number: 1, color: Colors.amber, title: 'title'),
+          //           Counter(number: 1, color: Colors.amber, title: 'title'),
+          //           Counter(number: 1, color: Colors.amber, title: 'title'),
+          //           Counter(number: 1, color: Colors.amber, title: 'title'),
+          //         ],
+          //       );
+          //     },
+          //     childCount: 1,
+          //   ),
+          // ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    const SymptomsDisease(),
+                    const SymptomsDisease(),
+                    const SymptomsDisease(),
+                    const SymptomsDisease(),
+                    const SymptomsDisease(),
+                    const SymptomsDisease(),
+                    const SymptomsDisease(),
+                    const SymptomsDisease(),
+                  ],
+                );
+              },
+              childCount: 1,
             ),
-          ],
-        ),
+          ),
+          // SliverList(
+          //   delegate: SliverChildBuilderDelegate(
+          //     (BuildContext context, int index) {
+          //       return Text(
+          //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+          //       );
+          //     },
+          //     childCount: 11,
+          //   ),
+          // ),
+        ],
       ),
     );
   }
@@ -222,7 +116,7 @@ class Counter extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          padding:const EdgeInsets.all(6),
+          padding: const EdgeInsets.all(6),
           height: 25,
           width: 25,
           decoration: BoxDecoration(
@@ -240,7 +134,7 @@ class Counter extends StatelessWidget {
             ),
           ),
         ),
-     const   SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "$number",
           style: TextStyle(
