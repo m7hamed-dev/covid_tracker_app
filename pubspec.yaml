@@ -39,8 +39,7 @@ dependencies:
   url_launcher: ^6.0.17
   pie_chart: ^5.1.0
   flutter_swiper_null_safety: ^1.0.2
-  # dynamic_theme: ^1.0.1
-  # shared_preferences: ^0.5.7+3
+  shimmer: ^2.0.0  
 
 dev_dependencies:
   flutter_test:

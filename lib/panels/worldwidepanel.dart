@@ -64,21 +64,30 @@ class StatusPanel extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.all(10),
-      height: 80,
+      // height: 80,
       width: width / 2,
-      color: panelColor,
+      decoration: BoxDecoration(
+        color: panelColor,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             title,
             style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 16, color: textColor),
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: textColor,
+            ),
           ),
           Text(
             count,
             style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: textColor,
+            ),
           )
         ],
       ),

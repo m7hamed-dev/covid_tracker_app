@@ -2,12 +2,14 @@ import 'package:covid_19/pages/countyPage.dart';
 import 'package:covid_19/pages/swiper_page.dart';
 import 'package:covid_19/panels/mosteffectedcountries.dart';
 import 'package:covid_19/panels/worldwidepanel.dart';
+import 'package:covid_19/widgets/shimmer_world_wide.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'datasorce.dart';
 import 'models/spacific_country_mode.dart';
 import 'models/world_cases_model.dart';
 import 'panels/infoPanel.dart';
+import 'tools/push.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,13 +21,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   Map worldData = {};
   Future fetchWorldWideData() async {
+    // await Future.delayed(Duration(seconds: 5));
     http.Response response =
         await http.get(Uri.parse('https://corona.lmao.ninja/v2/all'));
     final worldCasesModel = worldCasesModelFromJson(response.body);
-    setState(() {
-      worldData = worldCasesModel;
-      // worldData = json.decode(response.body);
-    });
+    worldData = worldCasesModel;
+    // setState(() {});
   }
 
   // List countryData = [];
@@ -35,16 +36,14 @@ class _HomePageState extends State<HomePage> {
         .get(Uri.parse('https://corona.lmao.ninja/v2/countries?sort=cases'));
     final _spacifcCountryCasesModel =
         spacifcCountryCasesModelFromJson(response.body);
-    setState(() {
-      countryData = _spacifcCountryCasesModel;
-      // countryData = json.decode(response.body);
-    });
+    // countryData = _spacifcCountryCasesModel;
+    setState(() {});
   }
 
   Future fetchData() async {
     fetchWorldWideData();
     fetchCountryData();
-    print('fetchData called');
+    // print('fetchData called');
   }
 
   @override
@@ -56,22 +55,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   actions: <Widget>[
-      //     IconButton(
-      //         icon: Icon(Theme.of(context).brightness == Brightness.light
-      //             ? Icons.lightbulb_outline
-      //             : Icons.highlight),
-      //         onPressed: () {
-      //           // DynamicTheme.of(context).setBrightness(
-      //           //     Theme.of(context).brightness == Brightness.light
-      //           //         ? Brightness.dark
-      //           //         : Brightness.light);
-      //         })
-      //   ],
-      //   centerTitle: false,
-      //   title: const Text('COVID-19 TRACKER'),
-      // ),
       body: RefreshIndicator(
         onRefresh: fetchData,
         child: CustomScrollView(
@@ -81,22 +64,7 @@ class _HomePageState extends State<HomePage> {
               expandedHeight: 200.0,
               pinned: false,
               floating: true,
-              // title: const Icon(Icons.person),
               flexibleSpace: SwiperPage(),
-              // flexibleSpace: Container(
-              //   // height: 100,
-              //   // alignment: Alignment.center,
-              //   // padding: const EdgeInsets.all(10),
-              //   color: Colors.orange[100],
-              //   child: Text(
-              //     DataSource.quote,
-              //     style: TextStyle(
-              //       color: Colors.orange[800],
-              //       fontWeight: FontWeight.bold,
-              //       fontSize: 16,
-              //     ),
-              //   ),
-              // ),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
@@ -116,12 +84,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const CountryPage(),
-                                  ),
-                                );
+                                Push.toPage(context, const CountryPage());
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -142,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       worldData.isEmpty
-                          ? const CircularProgressIndicator()
+                          ? const ShimmerWorldWide()
                           : WorldwidePanel(
                               worldData: worldData,
                             ),
