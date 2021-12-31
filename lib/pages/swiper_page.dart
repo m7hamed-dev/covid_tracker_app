@@ -7,6 +7,12 @@ final _images = [
   'assets/images/3.png',
   'assets/images/4.png',
 ];
+final _info = [
+  'Fever',
+  'Dry Cough',
+  'Headache',
+  'Breathless',
+];
 
 class SwiperPage extends StatelessWidget {
   const SwiperPage({Key? key}) : super(key: key);
@@ -16,9 +22,27 @@ class SwiperPage extends StatelessWidget {
     return Swiper(
       itemCount: _images.length,
       itemBuilder: (BuildContext context, int index) {
-        return Image.asset(
-          _images[index],
-          fit: BoxFit.fill,
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(
+              _images[index],
+              fit: BoxFit.fill,
+            ),
+            Positioned(
+              bottom: 10,
+              left: 0.0,
+              child: Text(
+                _info[index],
+                style: const TextStyle(
+                  fontFamily: 'Ubuntu',
+                  // color: Colors.orange[800],
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
         );
       },
       indicatorLayout: PageIndicatorLayout.SCALE,
