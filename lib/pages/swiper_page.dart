@@ -22,33 +22,41 @@ class SwiperPage extends StatelessWidget {
     return Swiper(
       itemCount: _images.length,
       itemBuilder: (BuildContext context, int index) {
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            Image.asset(
-              _images[index],
-              fit: BoxFit.fill,
-            ),
-            Positioned(
-              bottom: 10,
-              left: 0.0,
-              child: Container(
-                padding: const EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(.1),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Text(
-                  _info[index],
-                  style: const TextStyle(
-                    fontFamily: 'Ubuntu',
-                    color: Colors.white,
-                    fontSize: 16,
+        return Container(
+          color: Colors.grey.shade100,
+          // margin: const EdgeInsets.all(10.0),
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(10.0),
+          //   color: Colors.grey.shade200,
+          // ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset(
+                _images[index],
+                fit: BoxFit.fill,
+              ),
+              Positioned(
+                bottom: 10,
+                left: 0.0,
+                child: Container(
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(.1),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Text(
+                    _info[index],
+                    style: const TextStyle(
+                      fontFamily: 'Ubuntu',
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
       // duration: 9000,
@@ -59,6 +67,7 @@ class SwiperPage extends StatelessWidget {
       control: const SwiperControl(),
       fade: 1.0,
       viewportFraction: 0.98,
+    
     );
   }
 }

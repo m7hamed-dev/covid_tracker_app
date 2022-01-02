@@ -2,6 +2,7 @@ import 'package:covid_19/pages/swiper_page.dart';
 import 'package:covid_19/panels/mosteffectedcountries.dart';
 import 'package:covid_19/panels/worldwidepanel.dart';
 import 'package:covid_19/tools/constants.dart';
+import 'package:covid_19/tools/txt_style.dart';
 import 'package:covid_19/widgets/shimmer_world_wide.dart';
 import 'package:covid_19/widgets/symptoms_disease.dart';
 import 'package:covid_19/widgets/tips_advice.dart';
@@ -65,12 +66,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _isError
           ? Center(
-              child: Text(_error),
+              child: Text(_error, style: TxtStyle.style(fontSize: 30.0)),
             )
           : RefreshIndicator(
               onRefresh: fetchData,
               child: CustomScrollView(
                 slivers: [
+                  // appbar
                   const SliverAppBar(
                     elevation: 0.0,
                     expandedHeight: 200.0,
@@ -78,6 +80,7 @@ class _HomePageState extends State<HomePage> {
                     floating: true,
                     flexibleSpace: SwiperPage(),
                   ),
+                  //
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
@@ -120,12 +123,13 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
+                            // data
                             worldData.isEmpty
                                 ? const ShimmerWorldWide()
-                                : WorldwidePanel(
-                                    worldData: worldData,
-                                  ),
+                                : WorldwidePanel(worldData: worldData),
+                            //
                             const SymptomsDisease(),
+                            //
                             const Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10.0),
                               child: Text(

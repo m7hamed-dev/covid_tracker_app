@@ -1,15 +1,43 @@
 import 'dart:ui';
 
 import 'package:covid_19/models/spacific_country_mode.dart';
+import 'package:covid_19/panels/mosteffectedcountries.dart';
+import 'package:covid_19/panels/worldwidepanel.dart';
+import 'package:covid_19/widgets/card_counter.dart';
 import 'package:covid_19/widgets/custom_cached_img.dart';
+import 'package:covid_19/widgets/my_divider.dart';
 import 'package:covid_19/widgets/symptoms_disease.dart';
+import 'package:covid_19/widgets/tips_advice.dart';
 import 'package:flutter/material.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
   final SpacifcCountryCasesModel countryCasesModel;
 
   const DetailsPage({Key? key, required this.countryCasesModel})
       : super(key: key);
+
+  @override
+  State<DetailsPage> createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  double _height = 100.0;
+  int _duration = 1000;
+  Color _titleColor = Colors.amber;
+
+  Future<void> changeHeight() async {
+    await Future.delayed(const Duration(milliseconds: 1000)).then((_) {
+      _height = 150.0;
+      _titleColor = Colors.black.withOpacity(.2);
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    changeHeight();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,134 +47,66 @@ class DetailsPage extends StatelessWidget {
       //     widget.countryCasesModel.country,
       //   ),
       // ),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            elevation: 0.0,
-            expandedHeight: 100.0,
-            pinned: false,
-            floating: true,
-            title: Text(countryCasesModel.country),
-            flexibleSpace: SizedBox(
-              height: 100.0,
-              // child: Wrap(
-              child: ListView(
-                children: [
-                  CustomCachedImg(
-                    height: 50.0,
-                    imageUrl: countryCasesModel.countryInfo.flag,
-                    // height: 50,
-                    // width: 60,
-                  ),
-                  // Row(
-                  //   children: [
-                  //     Counter(number: 1, color: Colors.amber, title: 'title'),
-                  //     Counter(number: 1, color: Colors.amber, title: 'title'),
-                  //     Counter(number: 1, color: Colors.amber, title: 'title'),
-                  //     Counter(number: 1, color: Colors.amber, title: 'title'),
-                  //   ],
-                  // ),
-                ],
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            //
+            SliverAppBar(
+              elevation: 0.0,
+              expandedHeight: 150,
+              pinned: false,
+              floating: true,
+              title: AnimatedContainer(
+                padding: const EdgeInsets.all(5.0),
+                duration: Duration(milliseconds: _duration),
+                decoration: BoxDecoration(
+                  color: _titleColor,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Text(widget.countryCasesModel.country),
+              ),
+              flexibleSpace: CustomCachedImg(
+                height: 150.0,
+                imageUrl: widget.countryCasesModel.countryInfo.flag,
               ),
             ),
-          ),
-          // SliverList(
-          //   delegate: SliverChildBuilderDelegate(
-          //     (BuildContext context, int index) {
-          //       return Row(
-          //         children: [
-          //           Counter(number: 1, color: Colors.amber, title: 'title'),
-          //           Counter(number: 1, color: Colors.amber, title: 'title'),
-          //           Counter(number: 1, color: Colors.amber, title: 'title'),
-          //           Counter(number: 1, color: Colors.amber, title: 'title'),
-          //         ],
-          //       );
-          //     },
-          //     childCount: 1,
-          //   ),
-          // ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    const SymptomsDisease(),
-                    const SymptomsDisease(),
-                    const SymptomsDisease(),
-                    const SymptomsDisease(),
-                    const SymptomsDisease(),
-                    const SymptomsDisease(),
-                    const SymptomsDisease(),
-                    const SymptomsDisease(),
-                  ],
-                );
-              },
-              childCount: 1,
+            // SliverList(
+            //   delegate: SliverChildBuilderDelegate(
+            //     (BuildContext context, int index) {
+            //       return Row(
+            //         children: [
+            //           Counter(number: 1, color: Colors.amber, title: 'title'),
+            //           Counter(number: 1, color: Colors.amber, title: 'title'),
+            //           Counter(number: 1, color: Colors.amber, title: 'title'),
+            //           Counter(number: 1, color: Colors.amber, title: 'title'),
+            //         ],
+            //       );
+            //     },
+            //     childCount: 1,
+            //   ),
+            // ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('SymptomsDisease'),
+                      const SymptomsDisease(),
+                      //
+                      const MyDivider(),
+                      Text('advice'),
+                      const TipsAdvice(),
+                      CardCounter(data: widget.countryCasesModel),
+                    ],
+                  );
+                },
+                childCount: 1,
+              ),
             ),
-          ),
-          // SliverList(
-          //   delegate: SliverChildBuilderDelegate(
-          //     (BuildContext context, int index) {
-          //       return Text(
-          //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-          //       );
-          //     },
-          //     childCount: 11,
-          //   ),
-          // ),
-        ],
+          ],
+        ),
       ),
-    );
-  }
-}
-
-class Counter extends StatelessWidget {
-  final int number;
-  final Color color;
-  final String title;
-  const Counter({
-    Key? key,
-    required this.number,
-    required this.color,
-    required this.title,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.all(6),
-          height: 25,
-          width: 25,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color.withOpacity(.26),
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.transparent,
-              border: Border.all(
-                color: color,
-                width: 2,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          "$number",
-          style: TextStyle(
-            fontSize: 40,
-            color: color,
-          ),
-        ),
-        Text(
-          title,
-          // style: kSubTextStyle,
-        ),
-      ],
     );
   }
 }

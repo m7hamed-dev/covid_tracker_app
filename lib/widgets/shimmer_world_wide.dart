@@ -15,14 +15,17 @@ class ShimmerWorldWide extends StatelessWidget {
         crossAxisSpacing: 10.0,
         mainAxisSpacing: 3.0,
       ),
-      itemCount: 4,
+      itemCount: 5,
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
           baseColor: Colors.grey.shade100,
-          highlightColor: Colors.grey,
+          highlightColor: Colors.grey.shade200,
           child: Container(
             margin: const EdgeInsets.all(10.0),
-            color: Colors.blue,
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
           ),
         );
       },

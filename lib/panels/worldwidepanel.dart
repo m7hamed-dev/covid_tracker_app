@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class WorldwidePanel extends StatelessWidget {
   final Map worldData;
-
-  const WorldwidePanel({Key? key, required this.worldData}) : super(key: key);
-
+  const WorldwidePanel({
+    Key? key,
+    required this.worldData,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GridView(
@@ -15,6 +16,12 @@ class WorldwidePanel extends StatelessWidget {
         childAspectRatio: 2,
       ),
       children: <Widget>[
+        StatusPanel(
+          title: 'todayCases',
+          panelColor: Colors.red[100]!,
+          textColor: Colors.red,
+          count: worldData['todayCases'].toString(),
+        ),
         StatusPanel(
           title: 'CONFIRMED',
           panelColor: Colors.red[100]!,
@@ -60,33 +67,60 @@ class StatusPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
+    // double width = MediaQuery.of(context).size.width;
     return Container(
       margin: const EdgeInsets.all(10),
-      // height: 80,
-      width: width / 2,
+      // width: width / 2,
       decoration: BoxDecoration(
         color: panelColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
+        // alignment: Alignment.center,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: textColor,
+          // title
+          Positioned(
+            top: 5.0,
+            left: 10.0,
+            child: Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: textColor,
+              ),
             ),
           ),
-          Text(
-            count,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: textColor,
+          // count
+          Positioned(
+            // top: 10.0,
+            left: 10.0 + 30.0,
+            // right: 20.0,
+            bottom: 30.0,
+            child: Text(
+              count,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 5.0,
+            left: 10.0,
+            child: Container(
+              width: 10.0,
+              height: 10.0,
+              decoration: BoxDecoration(
+                // color: Colors.black,
+                color: textColor,
+                borderRadius: BorderRadius.circular(10.0),
+                border: Border.all(
+                  width: 2.0,
+                  color: Colors.white,
+                ),
+              ),
             ),
           )
         ],

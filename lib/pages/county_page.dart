@@ -71,17 +71,7 @@ class _CountryPageState extends State<CountryPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         controller: _searchController,
-                        onChanged: (value) {
-                          _searchCountryData = _searchController.text.isEmpty
-                              ? countryData
-                              : countryData.where((e) {
-                                  if (e.country.contains(value)) {
-                                    return true;
-                                  }
-                                  return false;
-                                }).toList();
-                          setState(() {});
-                        },
+                        onChanged: _onChangeVlue,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20.0),
@@ -116,6 +106,18 @@ class _CountryPageState extends State<CountryPage> {
                 ),
     );
   }
+
+  void _onChangeVlue(value) {
+    _searchCountryData = _searchController.text.isEmpty
+        ? countryData
+        : countryData.where((e) {
+            if (e.country.toLowerCase().contains(value)) {
+              return true;
+            }
+            return false;
+          }).toList();
+    setState(() {});
+  }
 }
 
 class CardCountryStatistics extends StatelessWidget {
@@ -130,7 +132,7 @@ class CardCountryStatistics extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Push.toPage(context, DetailsPage(countryCasesModel: countryCasesModel));
+        _goToDetailsPage(context);
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -200,5 +202,9 @@ class CardCountryStatistics extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _goToDetailsPage(BuildContext context) {
+    Push.toPage(context, DetailsPage(countryCasesModel: countryCasesModel));
   }
 }
