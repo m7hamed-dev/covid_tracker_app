@@ -1,3 +1,4 @@
+import 'package:covid_19/data_layer/data_layer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
@@ -6,12 +7,6 @@ final _images = [
   'assets/images/2.png',
   'assets/images/3.png',
   'assets/images/4.png',
-];
-final _info = [
-  'Fever',
-  'Dry Cough',
-  'Headache',
-  'Breathless',
 ];
 
 class SwiperPage extends StatelessWidget {
@@ -23,12 +18,7 @@ class SwiperPage extends StatelessWidget {
       itemCount: _images.length,
       itemBuilder: (BuildContext context, int index) {
         return Container(
-          color: Colors.grey.shade100,
-          // margin: const EdgeInsets.all(10.0),
-          // decoration: BoxDecoration(
-          //   borderRadius: BorderRadius.circular(10.0),
-          //   color: Colors.grey.shade200,
-          // ),
+          color: Colors.black.withOpacity(.8),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -38,15 +28,15 @@ class SwiperPage extends StatelessWidget {
               ),
               Positioned(
                 bottom: 10,
-                left: 0.0,
+                left: 5.0,
                 child: Container(
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(.1),
+                    color: Colors.white.withOpacity(.2),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Text(
-                    _info[index],
+                    DataLayer.symptomsDiseaseData[index],
                     style: const TextStyle(
                       fontFamily: 'Ubuntu',
                       color: Colors.white,
@@ -63,11 +53,12 @@ class SwiperPage extends StatelessWidget {
       // autoplayDelay: 1000,
       indicatorLayout: PageIndicatorLayout.SCALE,
       autoplay: true,
-      pagination: const SwiperPagination(),
-      control: const SwiperControl(),
-      fade: 1.0,
-      viewportFraction: 0.98,
-    
+      pagination: const SwiperPagination(
+        alignment: Alignment.centerLeft,
+      ),
+      // control: const SwiperControl(),
+      // fade: 1.0,
+      // viewportFraction: 0.98,
     );
   }
 }

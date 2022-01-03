@@ -1,3 +1,5 @@
+import 'package:covid_19/data_layer/data_layer.dart';
+import 'package:covid_19/tools/txt_style.dart';
 import 'package:flutter/material.dart';
 
 class SymptomsDisease extends StatelessWidget {
@@ -5,40 +7,44 @@ class SymptomsDisease extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 100.0,
-      // color: Colors.amber.shade100,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: List.generate(
           4,
           (index) => Container(
             width: 90,
-            height: 60,
             margin: const EdgeInsets.all(4.0),
             decoration: BoxDecoration(
-              color: Colors.amber.shade100,
+              color: Colors.black.withOpacity(.01),
               borderRadius: BorderRadius.circular(10.0),
-              image: DecorationImage(
-                image: AssetImage(
+            ),
+            child: Stack(
+              children: [
+                Image.asset(
                   _imagePath(index),
                 ),
-              ),
-              boxShadow: [
-                BoxShadow(),
+                Positioned(
+                  bottom: 2.0,
+                  left: 5.0,
+                  right: 5.0,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(2.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(.2),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Text(
+                      DataLayer.symptomsDiseaseData[index],
+                      style: TxtStyle.style(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
               ],
-            ),
-            child: Container(
-              padding: const EdgeInsets.only(bottom: 10.0, left: 4.0),
-              alignment: Alignment.bottomLeft,
-              // decoration: BoxDecoration(
-              //   color: Colors.amber.shade100,
-              //   borderRadius: BorderRadius.circular(10.0),
-              //   boxShadow: [
-              //     BoxShadow(),
-              //   ],
-              // ),
-              child: Text('data'),
             ),
           ),
         ),

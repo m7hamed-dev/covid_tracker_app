@@ -45,18 +45,6 @@ class _CountryPageState extends State<CountryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: const <Widget>[
-          // IconButton(
-          //   icon: Icon(Icons.search),
-          //   onPressed: () {
-          //     showSearch(context: context, delegate: Search(countryData));
-          //   },
-          // )
-        ],
-        // title: const Text('Country Stats'),
-        title: Text('${_searchCountryData.length}'),
-      ),
       body: isError
           ? Center(
               child: Text(_error),
@@ -65,45 +53,62 @@ class _CountryPageState extends State<CountryPage> {
               ? const Center(
                   child: ShimmerLoadingCountries(),
                 )
-              : Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: _searchController,
-                        onChanged: _onChangeVlue,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                              borderSide: BorderSide(
-                                width: 1.0,
-                              )),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          filled: true,
-                          hintStyle: TextStyle(color: Colors.grey[800]),
-                          hintText: "Type in your text",
-                          fillColor: Colors.white70,
+              : SafeArea(
+                  child: CustomScrollView(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    slivers: [
+                      SliverAppBar(
+                        expandedHeight: 200,
+                        pinned: false,
+                        floating: true,
+                        leading: null,
+                        flexibleSpace: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            IconButton(
+                              onPressed: () => Navigator.pop(context),
+                              icon: const Icon(Icons.arrow_back_ios),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                'All Countries',
+                                style: TxtStyle.style(
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                controller: _searchController,
+                                onChanged: _onChangeVlue,
+                                decoration: InputDecoration(
+                                  focusedBorder: _outLineInputBorder(),
+                                  border: _outLineInputBorder(),
+                                  filled: true,
+                                  hintStyle: const TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                  hintText: 'Search',
+                                  fillColor: Colors.white70,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: ListView.separated(
-                        itemCount: _searchCountryData.length,
-                        itemBuilder: (context, index) {
-                          return CardCountryStatistics(
-                            countryCasesModel: _searchCountryData[index],
-                          );
-                        },
-                        separatorBuilder: (context, index) => Divider(
-                          thickness: 10.0,
-                          color: Colors.grey.shade200,
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+    );
+  }
+
+  OutlineInputBorder _outLineInputBorder() {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20.0),
+      borderSide: const BorderSide(width: 0.1),
     );
   }
 
@@ -120,8 +125,8 @@ class _CountryPageState extends State<CountryPage> {
   }
 }
 
-class CardCountryStatistics extends StatelessWidget {
-  const CardCountryStatistics({
+class CardCountry extends StatelessWidget {
+  const CardCountry({
     Key? key,
     required this.countryCasesModel,
   }) : super(key: key);

@@ -1,3 +1,5 @@
+import 'package:covid_19/data_layer/data_layer.dart';
+import 'package:covid_19/tools/txt_style.dart';
 import 'package:flutter/material.dart';
 
 class TipsAdvice extends StatelessWidget {
@@ -6,51 +8,48 @@ class TipsAdvice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.0,
-      // color: Colors.amber.shade100,
+      height: 150.0,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: List.generate(
-          10,
+          DataLayer.tips.length,
           (index) => Container(
-            width: 90,
-            height: 60,
+            width: 135.0,
             margin: const EdgeInsets.all(4.0),
             decoration: BoxDecoration(
-              color: Colors.amber.shade100,
+              color: Colors.black.withOpacity(.05),
               borderRadius: BorderRadius.circular(10.0),
-              image: DecorationImage(
-                image: AssetImage(
-                  _imagePath(index),
-                ),
-              ),
-              boxShadow: [
-                BoxShadow(),
-              ],
             ),
-            child: Container(
-              padding: const EdgeInsets.only(bottom: 10.0, left: 4.0),
-              alignment: Alignment.bottomLeft,
-              // decoration: BoxDecoration(
-              //   color: Colors.amber.shade100,
-              //   borderRadius: BorderRadius.circular(10.0),
-              //   boxShadow: [
-              //     BoxShadow(),
-              //   ],
-              // ),
-              child: Text('data'),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image.asset(
+                  DataLayer.tips[index].imageUrl,
+                  alignment: Alignment.center,
+                  width: 90.0,
+                  height: 90.0,
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(5.0),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(.05),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Text(
+                    DataLayer.tips[index].advice,
+                    style: TxtStyle.style(
+                      color: Colors.black.withOpacity(.8),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  String _imagePath(int index) {
-    if (index == 0) {
-      index++;
-      return 'assets/images/a$index.png';
-    }
-    return 'assets/images/a$index.png';
   }
 }

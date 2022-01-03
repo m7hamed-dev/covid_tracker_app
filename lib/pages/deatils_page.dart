@@ -1,8 +1,4 @@
-import 'dart:ui';
-
 import 'package:covid_19/models/spacific_country_mode.dart';
-import 'package:covid_19/panels/mosteffectedcountries.dart';
-import 'package:covid_19/panels/worldwidepanel.dart';
 import 'package:covid_19/widgets/card_counter.dart';
 import 'package:covid_19/widgets/custom_cached_img.dart';
 import 'package:covid_19/widgets/my_divider.dart';
@@ -70,32 +66,18 @@ class _DetailsPageState extends State<DetailsPage> {
                 imageUrl: widget.countryCasesModel.countryInfo.flag,
               ),
             ),
-            // SliverList(
-            //   delegate: SliverChildBuilderDelegate(
-            //     (BuildContext context, int index) {
-            //       return Row(
-            //         children: [
-            //           Counter(number: 1, color: Colors.amber, title: 'title'),
-            //           Counter(number: 1, color: Colors.amber, title: 'title'),
-            //           Counter(number: 1, color: Colors.amber, title: 'title'),
-            //           Counter(number: 1, color: Colors.amber, title: 'title'),
-            //         ],
-            //       );
-            //     },
-            //     childCount: 1,
-            //   ),
-            // ),
+
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('SymptomsDisease'),
+                      const Text('SymptomsDisease'),
                       const SymptomsDisease(),
                       //
                       const MyDivider(),
-                      Text('advice'),
+                      const Text('advice'),
                       const TipsAdvice(),
                       CardCounter(data: widget.countryCasesModel),
                     ],

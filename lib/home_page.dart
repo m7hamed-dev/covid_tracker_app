@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       worldData = worldCasesModel;
     } catch (e) {
       _isError = true;
-      _error = e.toString();
+      _error = 'connection error !!';
       setState(() {});
     }
   }
@@ -64,113 +64,145 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: _isError
-          ? Center(
-              child: Text(_error, style: TxtStyle.style(fontSize: 30.0)),
-            )
-          : RefreshIndicator(
-              onRefresh: fetchData,
-              child: CustomScrollView(
-                slivers: [
-                  // appbar
-                  const SliverAppBar(
-                    elevation: 0.0,
-                    expandedHeight: 200.0,
-                    pinned: false,
-                    floating: true,
-                    flexibleSpace: SwiperPage(),
-                  ),
-                  //
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  const Text(
-                                    'Worldwide',
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Push.toPage(context, const CountryPage());
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: primaryBlack,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      padding: const EdgeInsets.all(10),
-                                      child: const Text(
-                                        'Regional',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
+          ? InternetErrorWidget(error: _error)
+          : SafeArea(
+              child: RefreshIndicator(
+                onRefresh: fetchData,
+                child: CustomScrollView(
+                  slivers: [
+                    // appbar
+                    const SliverAppBar(
+                      elevation: 0.0,
+                      expandedHeight: 200.0,
+                      pinned: false,
+                      floating: true,
+                      flexibleSpace: SwiperPage(),
+                    ),
+                    //
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    const Text(
+                                      'Worldwide',
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    GestureDetector(
+                                      onTap: _goToCountryPage,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: primaryBlack,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        padding: const EdgeInsets.all(10),
+                                        child: const Text(
+                                          'Regional',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            // data
-                            worldData.isEmpty
-                                ? const ShimmerWorldWide()
-                                : WorldwidePanel(worldData: worldData),
-                            //
-                            const SymptomsDisease(),
-                            //
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Text(
-                                'TipsAdvice',
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            const TipsAdvice(),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Text(
-                                'Most affected Countries',
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            countryData.isEmpty
-                                ? Container()
-                                : MostAffectedPanel(
-                                    countryData: countryData,
-                                  ),
-                            const InfoPanel(),
-                            const SizedBox(height: 20),
-                            const Center(
+                              // data
+                              worldData.isEmpty
+                                  ? const ShimmerWorldWide()
+                                  : WorldwidePanel(worldData: worldData),
+                              //
+                              const SymptomsDisease(),
+                              //
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.0),
                                 child: Text(
-                              'WE ARE TOGETHER IN THE FIGHT',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            )),
-                            const SizedBox(height: 50)
-                          ],
-                        );
-                      },
-                      childCount: 1,
-                    ),
-                  )
-                ],
+                                  'TipsAdvice',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              const TipsAdvice(),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                child: Text(
+                                  'Most affected Countries',
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              countryData.isEmpty
+                                  ? Container()
+                                  : MostAffectedPanel(
+                                      countryData: countryData,
+                                    ),
+                              const InfoPanel(),
+                              const SizedBox(height: 20),
+                              const Center(
+                                child: Text(
+                                  'WE ARE TOGETHER IN THE FIGHT',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                              ),
+                              const SizedBox(height: 50)
+                            ],
+                          );
+                        },
+                        childCount: 1,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
+    );
+  }
+
+  void _goToCountryPage() {
+    Push.toPage(context, const CountryPage());
+  }
+}
+
+class InternetErrorWidget extends StatelessWidget {
+  const InternetErrorWidget({
+    Key? key,
+    required String error,
+  })  : _error = error,
+        super(key: key);
+
+  final String _error;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        _error,
+        style: TxtStyle.style(
+          fontSize: 40.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
